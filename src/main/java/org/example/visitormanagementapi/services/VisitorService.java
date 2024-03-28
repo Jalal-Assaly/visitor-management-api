@@ -1,0 +1,81 @@
+package org.example.visitormanagementapi.services;
+
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
+import lombok.RequiredArgsConstructor;
+import org.example.visitormanagementapi.documents.Visitor;
+import org.example.visitormanagementapi.documents.VisitorCollectionSequence;
+import org.example.visitormanagementapi.models.VisitorAttributesModel;
+import org.example.visitormanagementapi.models.VisitorModel;
+import org.example.visitormanagementapi.models.VisitorPersonalInfoModel;
+import org.example.visitormanagementapi.models.mappers.VisitorMapper;
+import org.example.visitormanagementapi.repositories.VisitorRepository;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
+import java.util.Objects;
+
+import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
+@Service
+@Validated
+@RequiredArgsConstructor
+public class VisitorService {
+
+    private final VisitorRepository visitorRepository;
+    private final VisitorMapper visitorMapper;
+    private final MongoOperations mongoOperations;
+
+    public List<Visitor> getAllVisitors() {
+        return visitorRepository.findAll();
+    }
+
+    public VisitorPersonalInfoModel getVisitorPersonalInfo(String email) {
+        Visitor visitor = visitorRepository.findVisitorByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Visitor does not exist"));
+        return new VisitorPersonalInfoModel(
+                visitor.getId(), visitor.getSsn(), visitor.getFirstName(), visitor.getLastName(), visitor.getEmail());
+    }
+
+    public VisitorAttributesModel getVisitorAttributes(String email) {
+        Visitor visitor = visitorRepository.findVisitorByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Visitor does not exist"));
+
+        return new VisitorAttributesModel(
+                visitor.getId(), visitor.getRole(), visitor.getTimeSchedule(),
+                visitor.getClearanceLevel());
+    }
+
+    public void addVisitor(@Valid VisitorModel visitorModel) {
+        visitorModel.setId(generateSequence());
+        visitorRepository.insert(visitorMapper.toVisitor(visitorModel));
+    }
+
+    public void updateVisitor(@Valid VisitorModel visitorModel, String id) {
+        if(!id.equals(visitorModel.getId())) throw new ValidationException("The Path ID and Request ID not matching");
+        visitorMapper.toVisitorModel(visitorRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("The Visitor with ID : (" + id + ") does not exist")));
+        visitorRepository.save(visitorMapper.toVisitor(visitorModel));
+    }
+
+    public void deleteVisitorAttributes(String id) {
+        visitorMapper.toVisitorModel(visitorRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("The Visitor with ID : (" + id + ") does not exist")));
+        visitorRepository.deleteById(id);
+    }
+
+    private String generateSequence() {
+        VisitorCollectionSequence counter = mongoOperations.findAndModify(query(where("_id").is(Visitor.SEQUENCE_NAME)),
+                new Update().inc("seq",1), options().returnNew(true).upsert(true),
+                VisitorCollectionSequence.class);
+        return String.valueOf(!Objects.isNull(counter) ? counter.getSeq() : 1);
+    }
+}
