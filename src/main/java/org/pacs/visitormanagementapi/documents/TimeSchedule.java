@@ -1,4 +1,4 @@
-package org.example.visitormanagementapi.documents;
+package org.pacs.visitormanagementapi.documents;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

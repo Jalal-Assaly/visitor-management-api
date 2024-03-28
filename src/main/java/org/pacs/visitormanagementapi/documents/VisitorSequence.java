@@ -1,4 +1,4 @@
-package org.example.visitormanagementapi.documents;
+package org.pacs.visitormanagementapi.documents;
 
 
 import lombok.AllArgsConstructor;
@@ -6,10 +6,10 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "visitorSequence")
+@Document(collection = "visitorsSequence")
 @Data
 @AllArgsConstructor
-public class VisitorCollectionSequence {
+public class VisitorSequence {
     @Id
     private String id;
     private long seq;

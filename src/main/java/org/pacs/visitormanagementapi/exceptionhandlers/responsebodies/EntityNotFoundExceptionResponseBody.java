@@ -1,30 +1,25 @@
-package org.example.visitormanagementapi.exceptionhandlers.responsebodies;
+package org.pacs.visitormanagementapi.exceptionhandlers.responsebodies;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.ValidationException;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.http.HttpStatusCode;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ValidationExceptionBody {
-
+public class EntityNotFoundExceptionResponseBody {
     @JsonProperty("timestamp")
     @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
-    private final LocalDateTime dateTime;
+    private LocalDateTime dateTime;
     @JsonProperty("status")
-    private final Integer status;
+    private Integer status;
     @JsonProperty("message")
     private String errorMessage;
 
-
-    public ValidationExceptionBody(HttpStatusCode status, ValidationException exception) {
+    public EntityNotFoundExceptionResponseBody(HttpStatusCode status, RuntimeException exception) {
         this.dateTime = LocalDateTime.now();
         this.status = status.value();
         this.errorMessage = exception.getMessage();

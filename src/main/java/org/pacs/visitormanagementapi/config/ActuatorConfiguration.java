@@ -1,4 +1,4 @@
-package org.example.visitormanagementapi.config;
+package org.pacs.visitormanagementapi.config;
 
 import org.springframework.boot.actuate.web.exchanges.HttpExchangeRepository;
 import org.springframework.boot.actuate.web.exchanges.InMemoryHttpExchangeRepository;

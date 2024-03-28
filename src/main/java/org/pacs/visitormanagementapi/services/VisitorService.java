@@ -1,16 +1,16 @@
-package org.example.visitormanagementapi.services;
+package org.pacs.visitormanagementapi.services;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
-import org.example.visitormanagementapi.documents.Visitor;
-import org.example.visitormanagementapi.documents.VisitorCollectionSequence;
-import org.example.visitormanagementapi.models.VisitorAttributesModel;
-import org.example.visitormanagementapi.models.VisitorModel;
-import org.example.visitormanagementapi.models.VisitorPersonalInfoModel;
-import org.example.visitormanagementapi.models.mappers.VisitorMapper;
-import org.example.visitormanagementapi.repositories.VisitorRepository;
+import org.pacs.visitormanagementapi.documents.Visitor;
+import org.pacs.visitormanagementapi.documents.VisitorSequence;
+import org.pacs.visitormanagementapi.models.VisitorAttributesModel;
+import org.pacs.visitormanagementapi.models.VisitorModel;
+import org.pacs.visitormanagementapi.models.VisitorPersonalInfoModel;
+import org.pacs.visitormanagementapi.models.mappers.VisitorMapper;
+import org.pacs.visitormanagementapi.repositories.VisitorRepository;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
@@ -73,9 +73,9 @@ public class VisitorService {
     }
 
     private String generateSequence() {
-        VisitorCollectionSequence counter = mongoOperations.findAndModify(query(where("_id").is(Visitor.SEQUENCE_NAME)),
+        VisitorSequence counter = mongoOperations.findAndModify(query(where("_id").is(Visitor.SEQUENCE_NAME)),
                 new Update().inc("seq",1), options().returnNew(true).upsert(true),
-                VisitorCollectionSequence.class);
+                VisitorSequence.class);
         return String.valueOf(!Objects.isNull(counter) ? counter.getSeq() : 1);
     }
 }

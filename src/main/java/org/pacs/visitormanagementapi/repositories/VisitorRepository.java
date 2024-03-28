@@ -1,6 +1,6 @@
-package org.example.visitormanagementapi.repositories;
+package org.pacs.visitormanagementapi.repositories;
 
-import org.example.visitormanagementapi.documents.Visitor;
+import org.pacs.visitormanagementapi.documents.Visitor;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

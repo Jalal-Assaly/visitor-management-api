@@ -1,11 +1,11 @@
-package org.example.visitormanagementapi.controllers;
+package org.pacs.visitormanagementapi.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.example.visitormanagementapi.documents.Visitor;
-import org.example.visitormanagementapi.models.VisitorAttributesModel;
-import org.example.visitormanagementapi.models.VisitorModel;
-import org.example.visitormanagementapi.models.VisitorPersonalInfoModel;
-import org.example.visitormanagementapi.services.VisitorService;
+import org.pacs.visitormanagementapi.documents.Visitor;
+import org.pacs.visitormanagementapi.models.VisitorAttributesModel;
+import org.pacs.visitormanagementapi.models.VisitorModel;
+import org.pacs.visitormanagementapi.models.VisitorPersonalInfoModel;
+import org.pacs.visitormanagementapi.services.VisitorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

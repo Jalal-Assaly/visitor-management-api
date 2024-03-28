@@ -1,9 +1,9 @@
-package org.example.visitormanagementapi.exceptionhandlers;
+package org.pacs.visitormanagementapi.exceptionhandlers;
 
-import com.example.companydatagateway.exceptionhandlers.responsebodies.EntityNotFoundExceptionResponseBody;
+import org.pacs.visitormanagementapi.exceptionhandlers.responsebodies.EntityNotFoundExceptionResponseBody;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
-import org.example.visitormanagementapi.exceptionhandlers.responsebodies.ValidationExceptionBody;
+import org.pacs.visitormanagementapi.exceptionhandlers.responsebodies.ValidationExceptionBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
