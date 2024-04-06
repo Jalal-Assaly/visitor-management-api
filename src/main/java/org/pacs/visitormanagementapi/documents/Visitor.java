@@ -21,8 +21,7 @@ public class Visitor {
     private String lastName;
     @HashIndexed
     private String email;
-
-    private String role;
+    private String department;
     private TimeSchedule timeSchedule;
     private String clearanceLevel;
 }

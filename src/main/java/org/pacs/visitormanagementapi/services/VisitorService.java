@@ -48,7 +48,7 @@ public class VisitorService {
                 .orElseThrow(() -> new EntityNotFoundException("Visitor does not exist"));
 
         return new VisitorAttributesModel(
-                visitor.getId(), visitor.getRole(), visitor.getTimeSchedule(),
+                visitor.getId(), visitor.getDepartment(), visitor.getTimeSchedule(),
                 visitor.getClearanceLevel());
     }
 
@@ -61,14 +61,14 @@ public class VisitorService {
         if(!id.equals(visitorModel.getId())) throw new ValidationException("The Path ID and Request ID not matching");
         visitorMapper.toVisitorModel(visitorRepository
                 .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("The Visitor with ID : (" + id + ") does not exist")));
+                .orElseThrow(() -> new EntityNotFoundException("The Visitor with ID(" + id + ") does not exist")));
         visitorRepository.save(visitorMapper.toVisitor(visitorModel));
     }
 
     public void deleteVisitorAttributes(String id) {
         visitorMapper.toVisitorModel(visitorRepository
                 .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("The Visitor with ID : (" + id + ") does not exist")));
+                .orElseThrow(() -> new EntityNotFoundException("The Visitor with ID(" + id + ") does not exist")));
         visitorRepository.deleteById(id);
     }
 
