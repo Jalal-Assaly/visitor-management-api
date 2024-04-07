@@ -25,14 +25,14 @@ public class VisitorController {
         return new ResponseEntity<>(visitors, HttpStatus.OK);
     }
 
-    @GetMapping("/find/info")
-    public ResponseEntity<VisitorPersonalInfoModel> getVisitorPersonalInfo(@RequestParam String email) {
+    @GetMapping("/find/info/email/{email}")
+    public ResponseEntity<VisitorPersonalInfoModel> getVisitorPersonalInfo(@PathVariable String email) {
         VisitorPersonalInfoModel visitorPersonalInfo = visitorService.getVisitorPersonalInfo(email);
         return new ResponseEntity<>(visitorPersonalInfo, HttpStatus.OK);
     }
 
-    @GetMapping("/find/attributes")
-    public ResponseEntity<VisitorAttributesModel> getVisitorAttributes(@RequestParam String email) {
+    @GetMapping("/find/attributes/email/{email}")
+    public ResponseEntity<VisitorAttributesModel> getVisitorAttributes(@PathVariable String email) {
         VisitorAttributesModel visitorAttributes = visitorService.getVisitorAttributes(email);
         return new ResponseEntity<>(visitorAttributes, HttpStatus.OK);
     }
