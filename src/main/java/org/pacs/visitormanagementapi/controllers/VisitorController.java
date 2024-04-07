@@ -43,13 +43,13 @@ public class VisitorController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping(path = "/update/id/{id}")
+    @PutMapping(path = "/update/{id}")
     public ResponseEntity<Void> updateVisitorAttributes(@RequestBody VisitorModel visitorModel, @PathVariable String id) {
         visitorService.updateVisitor(visitorModel, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete/id/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Void> deleteVisitorAttributes(@PathVariable String id) {
         visitorService.deleteVisitorAttributes(id);
         return new ResponseEntity<>(HttpStatus.OK);
