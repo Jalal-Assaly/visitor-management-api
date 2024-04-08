@@ -1,5 +1,6 @@
 package org.pacs.visitormanagementapi.services;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
@@ -11,6 +12,7 @@ import org.pacs.visitormanagementapi.models.VisitorModel;
 import org.pacs.visitormanagementapi.models.VisitorPersonalInfoModel;
 import org.pacs.visitormanagementapi.models.mappers.VisitorMapper;
 import org.pacs.visitormanagementapi.repositories.VisitorRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
@@ -54,22 +56,25 @@ public class VisitorService {
 
     public void addVisitor(@Valid VisitorModel visitorModel) {
         visitorModel.setId(generateSequence());
-        visitorRepository.insert(visitorMapper.toVisitor(visitorModel));
+        if(visitorRepository.existsVisitorBySsn(visitorModel.getSsn())) {
+            throw new EntityExistsException("Visitor already exists");
+        } else {
+            visitorRepository.insert(visitorMapper.toVisitor(visitorModel));
+        }
     }
 
     public void updateVisitor(@Valid VisitorModel visitorModel, String id) {
         if(!id.equals(visitorModel.getId())) throw new ValidationException("The Path ID and Request ID not matching");
-        visitorMapper.toVisitorModel(visitorRepository
-                .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("The Visitor with ID(" + id + ") does not exist")));
-        visitorRepository.save(visitorMapper.toVisitor(visitorModel));
+        Visitor visitor = visitorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Visitor was not found"));
+        BeanUtils.copyProperties(visitorModel, visitor, "id");
+        visitorRepository.save(visitor);
     }
 
-    public void deleteVisitorAttributes(String id) {
-        visitorMapper.toVisitorModel(visitorRepository
-                .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("The Visitor with ID(" + id + ") does not exist")));
-        visitorRepository.deleteById(id);
+    public void deleteVisitor(String id) {
+        Visitor visitorCredentials = visitorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Visitor was not found"));
+        visitorRepository.delete(visitorCredentials);
     }
 
     private String generateSequence() {

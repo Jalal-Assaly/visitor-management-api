@@ -8,5 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface VisitorRepository extends MongoRepository<Visitor, String> {
-    Optional<Visitor> findVisitorByEmail(String SSN);
+    Optional<Visitor> findVisitorByEmail(String email);
+
+    Boolean existsVisitorBySsn(String ssn);
 }
