@@ -51,7 +51,7 @@ public class VisitorController {
 
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Void> deleteVisitorAttributes(@PathVariable String id) {
-        visitorService.deleteVisitorAttributes(id);
+        visitorService.deleteVisitor(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
