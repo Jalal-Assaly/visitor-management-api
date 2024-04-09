@@ -1,7 +1,6 @@
 package org.pacs.visitormanagementapi.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.pacs.visitormanagementapi.documents.Visitor;
 import org.pacs.visitormanagementapi.models.VisitorAttributesModel;
 import org.pacs.visitormanagementapi.models.VisitorModel;
 import org.pacs.visitormanagementapi.models.VisitorPersonalInfoModel;
@@ -20,8 +19,8 @@ public class VisitorController {
     private final VisitorService visitorService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<Visitor>> getAllVisitors() {
-        List<Visitor> visitors = visitorService.getAllVisitors();
+    public ResponseEntity<List<VisitorModel>> getAllVisitors() {
+        List<VisitorModel> visitors = visitorService.getAllVisitors();
         return new ResponseEntity<>(visitors, HttpStatus.OK);
     }
 

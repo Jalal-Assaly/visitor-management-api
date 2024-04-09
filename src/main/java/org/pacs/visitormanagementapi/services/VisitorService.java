@@ -34,8 +34,11 @@ public class VisitorService {
     private final VisitorMapper visitorMapper;
     private final MongoOperations mongoOperations;
 
-    public List<Visitor> getAllVisitors() {
-        return visitorRepository.findAll();
+    public List<VisitorModel> getAllVisitors() {
+        return visitorRepository.findAll()
+                .stream()
+                .map(visitorMapper::toVisitorModel)
+                .toList();
     }
 
     public VisitorPersonalInfoModel getVisitorPersonalInfo(String email) {
