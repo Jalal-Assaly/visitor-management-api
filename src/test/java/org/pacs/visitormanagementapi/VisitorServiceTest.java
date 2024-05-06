@@ -146,13 +146,15 @@ public class VisitorServiceTest {
 
     @Test void testGetAllVisitors() {
         when(visitorRepository.findAll()).thenReturn(testVisitorList);
+        when(visitorMapper.toVisitorModel(testVisitor1)).thenReturn(testVisitorModel1);
+        when(visitorMapper.toVisitorModel(testVisitor2)).thenReturn(testVisitorModel2);
 
-        List<Visitor> actualVisitors = visitorService.getAllVisitors();
+        List<VisitorModel> actualVisitors = visitorService.getAllVisitors();
 
         verify(visitorRepository).findAll();
         assertThat(actualVisitors).hasSize(2);
-        assertThat(actualVisitors.get(0)).usingRecursiveComparison().isEqualTo(testVisitor1);
-        assertThat(actualVisitors.get(1)).usingRecursiveComparison().isEqualTo(testVisitor2);
+        assertThat(actualVisitors.get(0)).usingRecursiveComparison().isEqualTo(testVisitorModel1);
+        assertThat(actualVisitors.get(1)).usingRecursiveComparison().isEqualTo(testVisitorModel2);
     }
 
     @Test void testGetVisitorPersonalInfo_Success() {
