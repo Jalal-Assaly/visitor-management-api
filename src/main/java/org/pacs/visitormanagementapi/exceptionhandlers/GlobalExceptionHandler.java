@@ -1,5 +1,7 @@
 package org.pacs.visitormanagementapi.exceptionhandlers;
 
+import jakarta.persistence.EntityExistsException;
+import org.pacs.visitormanagementapi.exceptionhandlers.responsebodies.EntityExistsExceptionBody;
 import org.pacs.visitormanagementapi.exceptionhandlers.responsebodies.EntityNotFoundExceptionResponseBody;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
@@ -23,6 +25,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ValidationExceptionBody> handleValidationException(ValidationException exception) {
         HttpStatusCode status = HttpStatus.BAD_REQUEST;
         ValidationExceptionBody body = new ValidationExceptionBody(status, exception);
+        return new ResponseEntity<>(body, status);
+    }
+
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<EntityExistsExceptionBody> handleValidationException(EntityExistsException exception) {
+        HttpStatusCode status = HttpStatus.BAD_REQUEST;
+        EntityExistsExceptionBody body = new EntityExistsExceptionBody(status, exception);
         return new ResponseEntity<>(body, status);
     }
 }
