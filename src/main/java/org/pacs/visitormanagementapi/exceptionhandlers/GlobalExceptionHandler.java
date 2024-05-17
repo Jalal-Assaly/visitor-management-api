@@ -1,6 +1,8 @@
 package org.pacs.visitormanagementapi.exceptionhandlers;
 
 import jakarta.persistence.EntityExistsException;
+import jakarta.validation.ConstraintViolationException;
+import org.pacs.visitormanagementapi.exceptionhandlers.responsebodies.ConstraintViolationExceptionResponseBody;
 import org.pacs.visitormanagementapi.exceptionhandlers.responsebodies.EntityExistsExceptionBody;
 import org.pacs.visitormanagementapi.exceptionhandlers.responsebodies.EntityNotFoundExceptionResponseBody;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,6 +21,13 @@ public class GlobalExceptionHandler {
         HttpStatusCode status = HttpStatus.BAD_REQUEST;
         EntityNotFoundExceptionResponseBody entityNotFoundExceptionResponseBody = new EntityNotFoundExceptionResponseBody(status, exception);
         return new ResponseEntity<>(entityNotFoundExceptionResponseBody, status);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ConstraintViolationExceptionResponseBody> handleConstraintViolationException(ConstraintViolationException exception) {
+        HttpStatusCode status = HttpStatus.BAD_REQUEST;
+        ConstraintViolationExceptionResponseBody exceptionResponseBody = new ConstraintViolationExceptionResponseBody(status, exception);
+        return new ResponseEntity<>(exceptionResponseBody, status);
     }
 
     @ExceptionHandler(ValidationException.class)
