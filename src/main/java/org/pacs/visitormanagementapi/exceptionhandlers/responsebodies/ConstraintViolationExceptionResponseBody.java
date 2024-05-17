@@ -40,7 +40,7 @@ public class ConstraintViolationExceptionResponseBody {
 
         for (ConstraintViolation<?> violation : constraintViolations) {
             String message = violation.getMessage();
-            String[] parts = message.split(", ");
+            String[] parts = message.split(",");
             if (parts.length > 0) {
                 String lastPart = parts[parts.length - 1].trim();
                 errorMessages.add(lastPart);
