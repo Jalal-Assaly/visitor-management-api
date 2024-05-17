@@ -17,7 +17,7 @@ public class VisitorModel {
     private String id;
 
     @NotBlank(message = "SSN cannot be blank")
-    @Pattern(regexp = "^\\d{3}-\\d{2}-\\d{4}$", message = "SSN does not follow the standard format")
+    @Pattern(regexp = "^\\d{3}-\\d{2}-\\d{4}$", message = "SSN does not follow the standard format XXX-XX-XXXX")
     @JsonProperty("SSN")
     private String ssn;
 
