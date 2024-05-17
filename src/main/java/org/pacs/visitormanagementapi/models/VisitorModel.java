@@ -2,7 +2,6 @@ package org.pacs.visitormanagementapi.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -32,7 +31,7 @@ public class VisitorModel {
     private String lastName;
 
     @NotBlank(message = "Email cannot be blank")
-    @Email(message = "Given Email address has an unsuitable format")
+    @Pattern(regexp = "[a-zA-z0-9._-]+@[a-z]+\\.+[a-z]+", message = "Email address has an unsuitable format")
     @JsonProperty("EM")
     private String email;
 
