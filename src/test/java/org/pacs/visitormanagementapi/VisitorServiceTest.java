@@ -54,6 +54,7 @@ public class VisitorServiceTest {
     VisitorPersonalInfoModel testVisitorPersonalInfoModel2;
     VisitorAttributesModel testVisitorAttributesModel2;
     List<Visitor> testVisitorList;
+
     @BeforeEach
     void init() {
         // Initialize some time schedules
@@ -204,7 +205,7 @@ public class VisitorServiceTest {
         // Verify & Assert
         verify(visitorMapper).toVisitor(any(VisitorModel.class));
         verify(visitorRepository).existsVisitorBySsn(any(String.class));
-        verify(visitorRepository).insert(any(Visitor.class));
+        verify(visitorRepository).save(any(Visitor.class));
     }
 
     @Test void testAddVisitor_AlreadyExists() {
