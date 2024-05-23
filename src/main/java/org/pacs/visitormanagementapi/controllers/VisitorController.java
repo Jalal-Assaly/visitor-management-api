@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/visitor")
+@RequestMapping("/visitor-management")
 public class VisitorController {
 
     private final VisitorService visitorService;
