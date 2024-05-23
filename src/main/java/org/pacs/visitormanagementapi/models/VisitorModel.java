@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.pacs.visitormanagementapi.documents.TimeSchedule;
@@ -37,6 +38,7 @@ public class VisitorModel {
 
     @NotBlank(message = "Department cannot be null")
     @JsonProperty("DP")
+    @Size(max = 20, message = "Department field exceeds the limit of 20 characters")
     private String department;
 
     @Valid

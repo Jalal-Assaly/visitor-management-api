@@ -62,7 +62,7 @@ public class VisitorService {
         if(visitorRepository.existsVisitorBySsn(visitorModel.getSsn())) {
             throw new EntityExistsException("Visitor already exists");
         } else {
-            visitorRepository.save(visitorMapper.toVisitor(visitorModel));
+            visitorRepository.insert(visitorMapper.toVisitor(visitorModel));
         }
     }
 
