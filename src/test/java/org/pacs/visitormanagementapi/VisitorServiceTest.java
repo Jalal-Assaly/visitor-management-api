@@ -205,7 +205,7 @@ public class VisitorServiceTest {
         // Verify & Assert
         verify(visitorMapper).toVisitor(any(VisitorModel.class));
         verify(visitorRepository).existsVisitorBySsn(any(String.class));
-        verify(visitorRepository).save(any(Visitor.class));
+        verify(visitorRepository).insert(any(Visitor.class));
     }
 
     @Test void testAddVisitor_AlreadyExists() {
